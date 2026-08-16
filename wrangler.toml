@@ -1,0 +1,11 @@
+name = "shogun-hobby-shop"
+compatibility_date = "2026-08-16"
+
+[pages]
+pages_build_output_dir = "frontend"
+
+# Sau khi tạo D1, thêm binding:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "shogun_db"
+# database_id = "YOUR_DATABASE_ID"
