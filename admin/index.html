@@ -1,9 +1,99 @@
-<!DOCTYPE html>
-<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shogun Admin</title><link rel="stylesheet" href="css/admin.css"></head>
-<body><div class="layout"><aside><h1>SHOGUN<br>ADMIN</h1><a href="../frontend/">← Xem website</a><a class="active" href="#">Sản phẩm</a><a href="#categories">Danh mục</a><a href="#settings">Giao diện / Cài đặt</a></aside>
-<main><div class="top"><h2>Quản lý sản phẩm</h2><button id="new-product">+ Thêm sản phẩm</button></div>
-<section><div id="product-table"></div></section>
-<section id="categories"><h2>Danh mục sản phẩm</h2><div id="cat-table"></div></section>
-<section id="settings"><h2>Thông tin website</h2><div class="form"><label>Tên shop<input id="shop_name"></label><label>Tagline<input id="tagline"></label><label>Hotline<input id="phone"></label><label>Zalo URL<input id="zalo"></label><label>Facebook URL<input id="facebook"></label><button id="save-settings">Lưu cài đặt</button></div></section>
-</main></div>
-<script src="js/admin.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Shogun Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<div id="login-view" class="login-screen">
+  <div class="login-card">
+    <div class="brand">SHOGUN<span>ADMIN</span></div>
+    <p>Đăng nhập khu vực quản trị</p>
+    <form id="login-form">
+      <label>Mật khẩu admin<input id="login-password" type="password" autocomplete="current-password" required></label>
+      <button class="primary" type="submit">Đăng nhập</button>
+      <div id="login-error" class="error"></div>
+    </form>
+  </div>
+</div>
+
+<div id="app-view" class="app hidden">
+  <aside class="sidebar">
+    <div class="brand">SHOGUN<span>ADMIN</span></div>
+    <a href="#dashboard" data-nav="dashboard">Tổng quan</a>
+    <a href="#products" data-nav="products">Sản phẩm</a>
+    <a href="#categories" data-nav="categories">Danh mục</a>
+    <a href="#settings" data-nav="settings">Thông tin shop</a>
+    <div class="side-bottom"><a href="../" target="_blank">↗ Xem website</a><button id="logout" class="ghost">Đăng xuất</button></div>
+  </aside>
+
+  <main class="main">
+    <header class="mobile-header"><div class="brand">SHOGUN<span>ADMIN</span></div><button id="mobile-menu" class="ghost">☰</button></header>
+    <div id="toast" class="toast"></div>
+
+    <section id="dashboard" class="page-section">
+      <div class="page-head"><div><div class="eyebrow">DASHBOARD</div><h1>Tổng quan</h1><p>Quản lý ShogunHobbyShop từ một chỗ.</p></div><button id="quick-add" class="primary">+ Thêm sản phẩm</button></div>
+      <div class="stats">
+        <div class="stat"><span>Sản phẩm</span><strong id="stat-products">—</strong></div>
+        <div class="stat"><span>Danh mục</span><strong id="stat-categories">—</strong></div>
+        <div class="stat"><span>Đang hiển thị</span><strong id="stat-visible">—</strong></div>
+        <div class="stat"><span>Hết hàng</span><strong id="stat-out">—</strong></div>
+      </div>
+      <div class="panel intro"><h2>Admin v1</h2><p>Bạn có thể thêm, sửa, xóa sản phẩm; quản lý danh mục và cập nhật thông tin shop. Ảnh sản phẩm ở v1 dùng <b>URL ảnh</b>; bước R2 upload ảnh sẽ làm sau.</p></div>
+    </section>
+
+    <section id="products" class="page-section hidden">
+      <div class="page-head"><div><div class="eyebrow">CATALOGUE</div><h1>Sản phẩm</h1><p>Thêm và chỉnh sửa sản phẩm trong D1.</p></div><button id="add-product" class="primary">+ Thêm sản phẩm</button></div>
+      <div class="toolbar"><input id="product-search" placeholder="Tìm sản phẩm..."><select id="product-category-filter"><option value="">Tất cả danh mục</option></select></div>
+      <div class="panel"><div id="product-table" class="table-wrap"></div></div>
+    </section>
+
+    <section id="categories" class="page-section hidden">
+      <div class="page-head"><div><div class="eyebrow">CATEGORY</div><h1>Danh mục</h1><p>Tạo danh mục riêng cho shop.</p></div><button id="add-category" class="primary">+ Thêm danh mục</button></div>
+      <div class="panel"><div id="category-table" class="table-wrap"></div></div>
+    </section>
+
+    <section id="settings" class="page-section hidden">
+      <div class="page-head"><div><div class="eyebrow">STORE SETTINGS</div><h1>Thông tin shop</h1><p>Những thông tin cơ bản hiển thị trên website.</p></div></div>
+      <div class="panel form-panel">
+        <form id="settings-form" class="form-grid">
+          <label>Tên shop<input id="shop_name" name="shop_name"></label>
+          <label>Tagline<input id="tagline" name="tagline"></label>
+          <label>Hotline<input id="phone" name="phone"></label>
+          <label>Zalo URL<input id="zalo" name="zalo" placeholder="https://zalo.me/... "></label>
+          <label>Facebook URL<input id="facebook" name="facebook" placeholder="https://facebook.com/... "></label>
+          <div class="form-actions"><button class="primary" type="submit">Lưu cài đặt</button></div>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="product-modal" class="modal hidden"><div class="modal-card"><div class="modal-head"><h2 id="product-modal-title">Thêm sản phẩm</h2><button class="close" data-close="product-modal">×</button></div>
+<form id="product-form" class="form-grid">
+<input type="hidden" id="product-id">
+<label>Tên sản phẩm*<input id="product-name" required></label>
+<label>Giá (VNĐ)*<input id="product-price" type="number" min="0" step="1000" required></label>
+<label>Danh mục<select id="product-category"></select></label>
+<label>Tồn kho<input id="product-stock" type="number" min="0" step="1" value="0"></label>
+<label>Ảnh sản phẩm (URL)<input id="product-image" placeholder="https://...jpg"></label>
+<label class="full">Mô tả<textarea id="product-description" rows="6" placeholder="Mô tả sản phẩm..."></textarea></label>
+<label class="check full"><input id="product-visible" type="checkbox" checked> Hiển thị sản phẩm trên website</label>
+<div class="form-actions full"><button type="button" class="secondary" data-close="product-modal">Hủy</button><button class="primary" type="submit">Lưu sản phẩm</button></div>
+</form></div></div>
+
+<div id="category-modal" class="modal hidden"><div class="modal-card small"><div class="modal-head"><h2 id="category-modal-title">Thêm danh mục</h2><button class="close" data-close="category-modal">×</button></div>
+<form id="category-form" class="form-grid">
+<input type="hidden" id="category-id">
+<label>Tên danh mục*<input id="category-name" required></label>
+<label>Thứ tự<input id="category-order" type="number" min="0" value="0"></label>
+<label>Ảnh danh mục (URL)<input id="category-image" placeholder="https://...jpg"></label>
+<label class="check full"><input id="category-visible" type="checkbox" checked> Hiển thị danh mục</label>
+<div class="form-actions full"><button type="button" class="secondary" data-close="category-modal">Hủy</button><button class="primary" type="submit">Lưu danh mục</button></div>
+</form></div></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
