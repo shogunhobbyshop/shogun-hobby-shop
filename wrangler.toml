@@ -4,8 +4,6 @@ compatibility_date = "2026-08-16"
 [pages]
 pages_build_output_dir = "frontend"
 
-# Sau khi tạo D1, thêm binding:
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "shogun_db"
-# database_id = "YOUR_DATABASE_ID"
+# D1 is bound to the Pages project in Cloudflare Dashboard.
+# Binding variable name must be: DB
+# Do not create a second database.

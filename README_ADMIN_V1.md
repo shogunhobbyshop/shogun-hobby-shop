@@ -1,24 +1,22 @@
-# ShogunHobbyShop — Admin v1
+# ShogunHobbyShop Admin v1
 
-Bản này nâng `/admin/` thành CMS cơ bản, dùng Cloudflare Pages Functions + D1.
+## Important deployment structure
+This version puts the admin static files under `frontend/admin/` because Cloudflare Pages is configured with `frontend` as the build output directory.
 
-## Có gì
-- Đăng nhập admin bằng `ADMIN_PASSWORD` (Cloudflare Secret)
-- Dashboard thống kê
-- Thêm / sửa / xóa sản phẩm
-- Giá, tồn kho, danh mục, mô tả, ảnh URL, ẩn/hiện
-- Thêm / sửa / xóa danh mục
-- Chỉnh tên shop, tagline, hotline, Zalo, Facebook
+Expected structure:
+```
+frontend/
+  index.html
+  css/
+  js/
+  admin/
+    index.html
+    css/admin.css
+    js/admin.js
+functions/
+  api/...
+```
 
-## Cấu hình bắt buộc
-Cloudflare Pages/Workers project → Settings → Variables and Secrets → Add secret:
-- Name: `ADMIN_PASSWORD`
-- Value: mật khẩu admin bạn tự đặt
+Open the admin at `/admin/`.
 
-Sau khi thêm secret, redeploy project.
-
-## Upload lên GitHub
-Copy/ghi đè các thư mục `admin/` và `functions/` trong repo hiện tại bằng bản này. Không cần tạo lại D1.
-
-## R2
-V1 chưa upload ảnh trực tiếp. Ô ảnh dùng URL. R2 sẽ làm ở bước tiếp theo.
+The admin requires the Cloudflare secret `ADMIN_PASSWORD` and D1 binding `DB`.
